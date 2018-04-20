@@ -4,7 +4,7 @@
 
 <dom-module id="mastodon-api">
     <template>
-      <oauth-authorizator id="oauth" authorization-url="{{_getOAuthUrl('authorize')}}" client-id="{{clientId}}" redirect-url="{{_getCurrentLocation()}}"
+      <oauth-authorizator id="oauth" authorization-url="{{_getOAuthUrl('authorize')}}" client-id="{{clientId}}" redirect-url="{{_getRedirectUrl()}}"
         scopes='{{scopes}}' token-exchange-url="{{_getOAuthUrl('token')}}" token-refresh-url="{{_getOAuthUrl('token')}}">
       </oauth-authorizator>
 
@@ -38,6 +38,10 @@
               type: Array,
               reflectToAttribute: true,
               value: '["read","write","follow"]'
+            },
+            redirectUrl: {
+              type: String,
+              reflectToAttribute: true
             }
           };
         }
@@ -50,8 +54,8 @@
           return this.$.oauth.logout();
         }
 
-        _getCurrentLocation() {
-          return document.location;
+        _getRedirectUrl() {
+          return this.redirectUrl ? this.redirectUrl : document.location;
         }
         _getOAuthUrl(oauth_method) {
           return document.location.protocol + "//" + this.instance + "/oauth/" + oauth_method;
