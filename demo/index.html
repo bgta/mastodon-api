@@ -65,34 +65,33 @@
             
           </paper-card>
           
-
+          <script>
+              document.addEventListener("DOMContentLoaded", function(event) { 
+                function login() {
+                  var mastodonApi = document.getElementById('api');
+                  var clientId = document.getElementById('clientId').value;
+                  var redirectUrl = document.getElementById('redirectUrl').value;
+                  var scopes = [];
+                  if(document.getElementById('scope_read').checked)
+                    scopes.push('read');
+                  if(document.getElementById('scope_write').checked)
+                    scopes.push('write');
+                  if(document.getElementById('scope_follow').checked)
+                    scopes.push('follow');
+    
+                  mastodonApi.clientId = clientId;
+                  mastodonApi.instance = document.getElementById('instance').value;
+                  mastodonApi.scopes = scopes;
+                  mastodonApi.redirectUrl = redirectUrl;
+                  mastodonApi.login();
+                }
+    
+                document.getElementById('loginButton').addEventListener("click", login);
+                document.getElementById('redirectUrl').value = document.location;
+              });
+              
+            </script>
         </template>
-        <script>
-          document.addEventListener("DOMContentLoaded", function(event) { 
-            function login() {
-              var mastodonApi = document.getElementById('api');
-              var clientId = document.getElementById('clientId').value;
-              var redirectUrl = document.getElementById('redirectUrl').value;
-              var scopes = [];
-              if(document.getElementById('scope_read').checked)
-                scopes.push('read');
-              if(document.getElementById('scope_write').checked)
-                scopes.push('write');
-              if(document.getElementById('scope_follow').checked)
-                scopes.push('follow');
-
-              mastodonApi.clientId = clientId;
-              mastodonApi.instance = document.getElementById('instance').value;
-              mastodonApi.scopes = scopes;
-              mastodonApi.redirectUrl = redirectUrl;
-              mastodonApi.login();
-            }
-
-            document.getElementById('loginButton').addEventListener("click", login);
-            document.getElementById('redirectUrl').value = document.location;
-          });
-          
-        </script>
       </demo-snippet>
     </div>
   </body>
